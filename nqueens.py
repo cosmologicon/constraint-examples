@@ -1,12 +1,13 @@
 # N queens problem.
 # Place N queens on an NxN chessboard so that no two queens are attacking each other.
-# There are multiple solutions for N >= 4.
+# Finds all solutions. There are multiple solutions for N >= 4.
 
 from constraint import Problem
 
 # N = 8 solves in 0.1s
 # N = 10 solves in 0.9s
 # N = 12 solves in 21s
+# N = 14 solves in 11m
 N = 12
 
 problem = Problem()
