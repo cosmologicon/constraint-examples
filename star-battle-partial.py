@@ -1,21 +1,13 @@
 # Star Battle solver via CSP.
 
-# Constraints for Star Battle are:
-# * Exactly N stars in every row, column, and named group.
-# * No two stars may be adjacent, even diagonally.
-
-# This version uses a more complicated interpretation of the constraints. Each row is a single
-# variable, and the domain of each variable is the possible layouts of the N stars in each row.
-# There are S+1-N choose N possible layouts, so this is the number of possibilities for each
-# variable. The adjacency requirement is implemented by a pairwise check on adjacent rows.
-# There are S variables and 3S - 1 constraints.
+# Uses a partial solve done manually to speed things up.
 
 from constraint import Problem
 from itertools import combinations
 
 N = 2  # number of stars per row/column/group
 
-# From 2017 MIT Mystery Hunt. Does not solve after 30 minutes.
+# From 2017 MIT Mystery Hunt. 
 grid = """
 AABBBBBBCC
 ABBADDDDDC
@@ -28,6 +20,22 @@ GIGGJIEEJH
 GIIGJIJJJH
 GGGGJJJHHH
 """
+
+# partial solution: known cells are marked 0/1.
+# This speeds up the solution from 13s to 6s.
+partial = """
+..........
+.0..00000.
+....00..0.
+..........
+........0.
+..........
+..........
+..........
+..........
+..........
+"""
+partial = partial.strip().splitlines()
 
 # Transform the map into a list of lists
 grid = [list(row.strip()) for row in grid.splitlines() if row.strip()]
@@ -50,6 +58,13 @@ columnnames = list(range(S))
 spaced = lambda x: all(x[i] + 1 < x[i+1] for i in range(len(x) - 1))
 layouts = [layout for layout in combinations(range(S), N) if spaced(layout)]
 
+# Whether the layout matches the partial solution for the row.
+def matchpartial(layout, prow):
+	for col, value in enumerate(prow):
+		if value != "." and (value == "1") != (col in layout):
+			return False
+	return True
+
 # Two layouts may be used on adjacent rows if none of their entries are adjacent.
 okadjacent = lambda x, y: not any(abs(a - b) <= 1 for a in x for b in y)
 
@@ -69,7 +84,8 @@ def okgroup(groupname):
 	return constraint, rows
 
 problem = Problem()
-problem.addVariables(rownames, layouts)
+for row in rownames:
+	problem.addVariable(row, [layout for layout in layouts if matchpartial(layout, partial[row])])
 for row1, row2 in zip(rownames[:-1], rownames[1:]):
 	problem.addConstraint(okadjacent, (row1, row2))
 for column in columnnames:
