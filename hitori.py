@@ -5,7 +5,6 @@
 # All unshaded cells must be connected (not counting diagonals).
 
 from constraint import Problem, SomeNotInSetConstraint
-from itertools import permutations
 
 # Example from Wikipedia.
 # Solves in 3m

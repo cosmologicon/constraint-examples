@@ -6,7 +6,10 @@ To install requirements:
 
 	sudo pip3 python-constraint
 
-Examples done so far:
+Examples done so far (from simplest to most complex):
 
+* Sudoku
 * N queens
+* Hitori
 * Star Battle
+* ABC End View
