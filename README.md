@@ -13,3 +13,4 @@ Examples done so far (from simplest to most complex):
 * Hitori
 * Star Battle
 * ABC End View
+* Masyu
