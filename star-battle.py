@@ -15,7 +15,7 @@ from itertools import combinations
 
 N = 2  # number of stars per row/column/group
 
-# From 2017 MIT Mystery Hunt. Does not solve after 30 minutes.
+# From 2017 MIT Mystery Hunt. Solves in 12 seconds.
 grid = """
 AABBBBBBCC
 ABBADDDDDC

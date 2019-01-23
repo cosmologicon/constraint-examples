@@ -4,7 +4,7 @@ Solving logic puzzles in Python with the Constraint Satisfaction Problem solver 
 
 To install requirements:
 
-	sudo pip3 python-constraint
+	sudo pip3 install python-constraint
 
 Examples done so far (from simplest to most complex):
 
